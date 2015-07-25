@@ -28,11 +28,13 @@ namespace NSGASolution_WORKS1
         [STAThread]
         public override Grasshopper.GUI.Canvas.GH_ObjectResponse RespondToMouseDoubleClick(Grasshopper.GUI.Canvas.GH_Canvas sender, Grasshopper.GUI.GH_CanvasMouseEvent e)
         {
+            MyComponent.allSolutions = "teste";
             solutionsCounter = 0;
             variablesSliders = MyComponent.readSlidersList();
             NSGAIIProblem problem = new NSGAIIProblem("ArrayReal", MyComponent, solutionsCounter);
             NSGAIIRunner runner = new NSGAIIRunner(null, problem, null, MyComponent);
-
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + MyComponent.outputPath + "AllSolutions_" + MyComponent.fileName);
+            file.WriteLine(MyComponent.allSolutions);
 
 
 

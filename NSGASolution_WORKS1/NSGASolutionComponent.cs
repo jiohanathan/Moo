@@ -11,6 +11,9 @@ namespace NSGASolution_WORKS1
     {
         public List<double> objectives;
         public List<GH_NumberSlider> slidersList = new List<GH_NumberSlider>();
+        public int popSize = 0, maxIterations = 0; 
+        public string outputPath = null, fileName = null;
+        public string allSolutions = null;
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -53,10 +56,10 @@ namespace NSGASolution_WORKS1
             pManager.AddNumberParameter("Objectives", "Obj", "Design Objectives comes here", GH_ParamAccess.list); // Objectives
             // pManager.AddNumberParameter("Upper Limits", "UL", "Design Variables Higher Values", GH_ParamAccess.list); // Upper limits of variables
             //pManager.AddNumberParameter("Lower Limits", "LL", "Desing Variables Lower Values", GH_ParamAccess.list); // Lower Limits of variables
-            //pManager.AddIntegerParameter("Population Size", "Pop", "Population Size: number of solutions for each interation", GH_ParamAccess.item); // Population size
-            //pManager.AddIntegerParameter("Max Generation", "MaxGen", "Max number of generations: max number of set of solutions", GH_ParamAccess.item); // Max number of generations
-            //pManager.AddTextParameter("Output Path", "Out", "Address of output file", GH_ParamAccess.item); // Output destination
-            //pManager.AddTextParameter("File", "f", "File name + extension ('output.txt')", GH_ParamAccess.item); // FIle name
+            pManager.AddIntegerParameter("Population Size", "Pop", "Population Size: number of solutions for each interation", GH_ParamAccess.item); // Population size
+            pManager.AddIntegerParameter("Max Generation", "MaxGen", "Max number of generations: max number of set of solutions", GH_ParamAccess.item); // Max number of generations
+            pManager.AddTextParameter("Output Path", "Out", "Address of output file", GH_ParamAccess.item); // Output destination
+            pManager.AddTextParameter("File", "f", "File name + extension ('output.txt')", GH_ParamAccess.item); // FIle name
 
             // If you want to change properties of certain parameters, 
             // you can use the pManager instance to access them by index:
@@ -69,9 +72,9 @@ namespace NSGASolution_WORKS1
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             // ::: OUTPUT PARAMETERS :::
-            pManager.AddNumberParameter("Out1", "Out1", "First output. For tests only", GH_ParamAccess.list); // Variables
-            pManager.AddNumberParameter("Out2", "Out", "Second output. For tests only", GH_ParamAccess.list); // Objectives
-            pManager.AddNumberParameter("Out3", "Out", "Second output. For tests only", GH_ParamAccess.list); // Objectives
+            //pManager.AddNumberParameter("Out1", "Out1", "First output. For tests only", GH_ParamAccess.list); // Variables
+            //pManager.AddNumberParameter("Out2", "Out", "Second output. For tests only", GH_ParamAccess.list); // Objectives
+            //pManager.AddNumberParameter("Out3", "Out", "Second output. For tests only", GH_ParamAccess.list); // Objectives
 
 
             // Sometimes you want to hide a specific parameter from the Rhino preview.
@@ -100,8 +103,10 @@ namespace NSGASolution_WORKS1
             // When data cannot be extracted from a parameter, we should abort this method.
             if (!DA.GetDataList(0, variables)) return;
             if (!DA.GetDataList(1, objectives)) return;
-            //if (!DA.GetData(6, ref path)) return;
-            //if (!DA.GetData(7, ref fileName)) return;
+            if (!DA.GetData(2, ref popSize)) return;
+            if (!DA.GetData(3, ref maxIterations)) return;
+            if (!DA.GetData(4, ref outputPath)) return;
+            if (!DA.GetData(5, ref fileName)) return;
 
             //this.objectives = objectives;
 

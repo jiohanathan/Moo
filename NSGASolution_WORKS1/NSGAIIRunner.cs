@@ -75,8 +75,8 @@ namespace NSGASolution_WORKS1
             //algorithm = new ssNSGAII(problem);
 
             // Algorithm parameters
-            algorithm.SetInputParameter("populationSize", 1000);
-            algorithm.SetInputParameter("maxEvaluations", 25000);
+            algorithm.SetInputParameter("populationSize", comp.popSize);
+            algorithm.SetInputParameter("maxEvaluations", comp.maxIterations);
 
             // Mutation and Crossover for Real codification 
             parameters = new Dictionary<string, object>();
@@ -110,9 +110,12 @@ namespace NSGASolution_WORKS1
             // Result messages 
             //logger.Info("Total execution time: " + estimatedTime + "ms");
             //logger.Info("Variables values have been writen to file VAR");
-            population.PrintVariablesToFile(@"C:\New folder\test.txt");
+            population.PrintVariablesToFile(@"" + comp.outputPath + "VARIABLES_" + comp.fileName);
             //logger.Info("Objectives values have been writen to file FUN");
-            population.PrintObjectivesToFile(@"C:\New folder\test.txt");
+            population.PrintObjectivesToFile(@"" + comp.outputPath + "OBJECTIVES_" + comp.fileName);
+            // Saving all solutions to file
+            
+
             Console.WriteLine("Time: " + estimatedTime);
             Console.ReadLine();
             if (indicators != null)

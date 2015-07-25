@@ -47,8 +47,10 @@ namespace NSGASolution_WORKS1
 
             for (int i = 0; i < NumberOfVariables; i++)
             {
-                LowerLimit[i] = -5.0;
-                UpperLimit[i] = 5.0;
+                GH_NumberSlider curSlider = comp.readSlidersList()[i];
+                
+                LowerLimit[i] = (double)curSlider.Slider.Minimum;
+                UpperLimit[i] = (double)curSlider.Slider.Maximum; 
             }
 
             if (solutionType == "BinaryReal")
@@ -76,6 +78,8 @@ namespace NSGASolution_WORKS1
 
         public override void Evaluate(Solution solution)
         {
+            double[] storeVar = new double[NumberOfVariables];
+            double[] storeObj = new double[NumberOfObjectives];
             XReal x = new XReal(solution);
 
             // Reading x values
@@ -92,9 +96,8 @@ namespace NSGASolution_WORKS1
             for (int i = 0; i < component.readSlidersList().Count; i++)
             {
                 currentSlider = component.readSlidersList()[i];
-                currentSlider.Slider.Maximum = (decimal)UpperLimit[i];
-                currentSlider.Slider.Minimum = (decimal)LowerLimit[i];
                 currentSlider.SetSliderValue((decimal)x.GetValue(i));
+                //component.allSolutions = component.allSolutions + "" + x.GetValue(i) + " ";
                 Grasshopper.Instances.ActiveCanvas.Document.NewSolution(true);
             }
 
@@ -102,9 +105,11 @@ namespace NSGASolution_WORKS1
             for (int i = 0; i < component.objectives.Count; i++)
             {
                 solution.Objective[i] = component.objectives[i];
+                //component.allSolutions = component.allSolutions +"" + component.objectives[i] + " ";
 
             }
 
+            //component.allSolutions = component.allSolutions + "\n"; 
 
 
             //EvaluateObjectives(component);
