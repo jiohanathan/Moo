@@ -1,9 +1,11 @@
-﻿using Grasshopper.Kernel;
+﻿using Grasshopper.GUI.Canvas;
+using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using JMetalCSharp.Core;
 using JMetalCSharp.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -28,42 +30,38 @@ namespace NSGASolution_WORKS1
         [STAThread]
         public override Grasshopper.GUI.Canvas.GH_ObjectResponse RespondToMouseDoubleClick(Grasshopper.GUI.Canvas.GH_Canvas sender, Grasshopper.GUI.GH_CanvasMouseEvent e)
         {
-            MyComponent.allSolutions = "teste";
             solutionsCounter = 0;
             variablesSliders = MyComponent.readSlidersList();
             NSGAIIProblem problem = new NSGAIIProblem("ArrayReal", MyComponent, solutionsCounter);
             NSGAIIRunner runner = new NSGAIIRunner(null, problem, null, MyComponent);
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + MyComponent.outputPath + "AllSolutions_" + MyComponent.fileName);
-            file.WriteLine(MyComponent.allSolutions);
+            problem.PrintDesign();
 
-
-
-            //GH_NumberSlider currentSlider = null;
-            ////Grasshopper.Instances.ActiveCanvas.Document.ScheduleSolution(1, (GH_Document doc) =>
-            ////{
-            //if (variablesSliders.Count != 0)
-            //{
-            //    for (int j = 0; j < 5; j++)
-            //    {
-            //        for (int i = 0; i < variablesSliders.Count; i++)
-            //        {
-            //            currentSlider = variablesSliders[i];
-            //            currentSlider.SetSliderValue((decimal) i * j * 4);
-            //        }
-            //        Grasshopper.Instances.ActiveCanvas.Document.NewSolution(true);
-            //        MessageBox.Show("Objective" + MyComponent.objectives[0]);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("No inputs detected");
-            //}
-
-            //});
-            //MyComponent.DesignView.InitialDesign = new DesignVM(MyComponent.DesignLines, false, true, MyComponent.Score, MyComponent.Design);
-            //Window w = new StormCloudWindow(MyComponent.DesignView, MyComponent);
-            //w.Show();
             return base.RespondToMouseDoubleClick(sender, e);
         }
+
+        //protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
+        //{
+        //    Grasshopper.GUI.Canvas.GH_PaletteStyle styleStandard = null;
+        //    Grasshopper.GUI.Canvas.GH_PaletteStyle styleSelected = null;
+
+        //    if (channel == GH_CanvasChannel.Objects)
+        //    {
+        //        // Cache the current styles.
+        //        styleStandard = GH_Skin.palette_normal_standard;
+        //        styleSelected = GH_Skin.palette_normal_selected;
+        //        GH_Skin.palette_normal_standard = new GH_PaletteStyle(Color.HotPink, Color.Maroon, Color.DarkRed);
+        //        GH_Skin.palette_normal_selected = new GH_PaletteStyle(Color.SkyBlue, Color.DarkBlue, Color.Black);
+        //    }
+
+        //    // Allow the base class to render itself.
+        //    base.Render(canvas, graphics, channel);
+
+        //    if (channel == GH_CanvasChannel.Objects)
+        //    {
+        //        // Restore the cached styles.
+        //        GH_Skin.palette_normal_standard = styleStandard;
+        //        GH_Skin.palette_normal_selected = styleSelected;
+        //    }
+        //}
     }
 }

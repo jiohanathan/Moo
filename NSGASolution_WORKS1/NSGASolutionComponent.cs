@@ -13,7 +13,7 @@ namespace NSGASolution_WORKS1
         public List<GH_NumberSlider> slidersList = new List<GH_NumberSlider>();
         public int popSize = 0, maxIterations = 0; 
         public string outputPath = null, fileName = null;
-        public string allSolutions = null;
+        public string log = null;
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -23,10 +23,11 @@ namespace NSGASolution_WORKS1
         /// new tabs/panels will automatically be created.
         /// </summary>
         public NSGASolutionComponent()
-            : base("NSGAII", "NSGAII",
-                "Construct an Archimedean, or arithmetic, spiral given its radii and number of turns.",
-                "MIT", "Optimization")
+            : base("MOO", "MOO",
+                "MOO is a Multi Objective Optimization component using NSGAII Algorithm",
+                "MIT", "MOO")
         {
+            
         }
         public override void CreateAttributes()
         {
