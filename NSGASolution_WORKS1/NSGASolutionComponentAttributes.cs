@@ -36,7 +36,7 @@ namespace NSGASolution_WORKS1
             variablesSliders = MyComponent.readSlidersList();
             NSGAIIProblem problem = new NSGAIIProblem("ArrayReal", MyComponent, solutionsCounter);
             NSGAIIRunner runner = new NSGAIIRunner(null, problem, null, MyComponent);
-            problem.PrintDesign();
+            //problem.PrintDesign();
 
             return base.RespondToMouseDoubleClick(sender, e);
         }

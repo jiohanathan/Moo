@@ -23,8 +23,9 @@ namespace NSGASolution_WORKS1
         List<GH_NumberSlider> variablesSliders = new List<GH_NumberSlider>();
         List<double> objectives = new List<double>();
         int solutionsCounter;
-        StreamWriter file = new StreamWriter(@"C:\New folder\test.txt");
-
+        //StreamWriter file = new StreamWriter(@"C:\Moo\LogFile.txt");
+            
+        
         #region Constructors
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace NSGASolution_WORKS1
             NumberOfObjectives = comp.objectives.Count;
             NumberOfConstraints = 0;
             ProblemName = "Multiobjective";
-
+           
             UpperLimit = new double[NumberOfVariables];
             LowerLimit = new double[NumberOfVariables];
 
@@ -107,20 +108,22 @@ namespace NSGASolution_WORKS1
 
         }
 
-        public void PrintDesign()
-        {
-            for (int j = 0; j < design.Count; j++)
-            {
-                double[] data = design[j];
-                string line = "";
-                for (int i = 0; i < (NumberOfVariables + NumberOfObjectives); i++)
-                {
-                    line = line + data[i] + ", ";
-                }
-                file.WriteLine(line);
-            }
-            file.Close();
-        }
+        //public void PrintDesign()
+        //{
+        //    //file = new StreamWriter(@"" + component.outputPath + "allSolutions" + component.fileName);
+
+        //    for (int j = 0; j < design.Count; j++)
+        //    {
+        //        double[] data = design[j];
+        //        string line = "";
+        //        for (int i = 0; i < (NumberOfVariables + NumberOfObjectives); i++)
+        //        {
+        //            line = line + data[i] + ", ";
+        //        }
+        //        file.WriteLine(line);
+        //    }
+        //    file.Close();
+        //}
 
 
 
