@@ -13,7 +13,7 @@ namespace NSGASolution_WORKS1
         public List<GH_NumberSlider> slidersList = new List<GH_NumberSlider>();
         public int popSize = 0, maxIterations = 0; 
         public string outputPath = null, fileName = null;
-        public string log = null;
+        public string allSolutions = null;
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -23,11 +23,10 @@ namespace NSGASolution_WORKS1
         /// new tabs/panels will automatically be created.
         /// </summary>
         public NSGASolutionComponent()
-            : base("MOO", "MOO",
-                "MOO is a Multi Objective Optimization component using NSGAII Algorithm",
-                "MIT", "MOO")
+            : base("NSGAII", "NSGAII",
+                "Construct an Archimedean, or arithmetic, spiral given its radii and number of turns.",
+                "MIT", "Optimization")
         {
-            
         }
         public override void CreateAttributes()
         {
@@ -72,14 +71,6 @@ namespace NSGASolution_WORKS1
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            // ::: OUTPUT PARAMETERS :::
-            //pManager.AddNumberParameter("Out1", "Out1", "First output. For tests only", GH_ParamAccess.list); // Variables
-            //pManager.AddNumberParameter("Out2", "Out", "Second output. For tests only", GH_ParamAccess.list); // Objectives
-            //pManager.AddNumberParameter("Out3", "Out", "Second output. For tests only", GH_ParamAccess.list); // Objectives
-
-
-            // Sometimes you want to hide a specific parameter from the Rhino preview.
-            // You can use the HideParameter() method as a quick way:
             //pManager.HideParameter(0);
         }
 
@@ -109,30 +100,7 @@ namespace NSGASolution_WORKS1
             if (!DA.GetData(4, ref outputPath)) return;
             if (!DA.GetData(5, ref fileName)) return;
 
-            //this.objectives = objectives;
-
-            //// Full path of output file
-            //string fullPath = path + fileName;
-
-            //// We should now validate the data and warn the user if invalid data is supplied.
-            //if (objectives.Count < 2)
-            //{
-            //    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "NSGA-II is a Multiobjective optimization algorithm. Please, provide at least 2 objectives.");
-            //    return;
-            //}
-
-            //// Reading Variables Sliders List
-            //foreach (IGH_Param param in Params.Input[0].Sources)
-            //{
-            //    GH_NumberSlider slider = param as Grasshopper.Kernel.Special.GH_NumberSlider;
-            //    variablesSliders.Add(slider);
-            //}
-
-            // ::: LOGIC :::
-
-
-
-        }
+         }
 
         public List<double> getObjectives()
         {

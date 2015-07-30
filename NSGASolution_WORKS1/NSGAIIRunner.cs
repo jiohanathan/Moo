@@ -7,6 +7,7 @@ using JMetalCSharp.Utils;
 using System;
 using System.Collections.Generic;
 using JMetalCSharp.Problems.Kursawe;
+using System.Windows.Forms;
 
 namespace NSGASolution_WORKS1
 {
@@ -110,14 +111,16 @@ namespace NSGASolution_WORKS1
             // Result messages 
             //logger.Info("Total execution time: " + estimatedTime + "ms");
             //logger.Info("Variables values have been writen to file VAR");
-            population.PrintVariablesToFile(@"" + comp.outputPath + "VARIABLES_" + comp.fileName);
+            
+            population.PrintVariablesToFile(@"C:\Users\Jonathas\Desktop");
+            MessageBox.Show(comp.fileName);
             //logger.Info("Objectives values have been writen to file FUN");
-            population.PrintObjectivesToFile(@"" + comp.outputPath + "OBJECTIVES_" + comp.fileName);
+            //population.PrintObjectivesToFile(@"" + comp.outputPath + "OBJECTIVES_" + comp.fileName);
             // Saving all solutions to file
             
 
-            Console.WriteLine("Time: " + estimatedTime);
-            Console.ReadLine();
+            //Console.WriteLine("Time: " + estimatedTime);
+            //Console.ReadLine();
             if (indicators != null)
             {
                 //logger.Info("Quality indicators");

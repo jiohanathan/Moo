@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using System.Windows.Forms;
-using System.IO;
 
 
 namespace NSGASolution_WORKS1
@@ -17,14 +16,8 @@ namespace NSGASolution_WORKS1
     /// </summary>
     public class NSGAIIProblem : Problem
     {
-        double[] storeDesign;
-        List<double[]> design = new List<double[]>();
         NSGASolutionComponent component = null;
         List<GH_NumberSlider> variablesSliders = new List<GH_NumberSlider>();
-        List<double> objectives = new List<double>();
-        int solutionsCounter;
-        //StreamWriter file = new StreamWriter(@"C:\Moo\LogFile.txt");
-            
         
         #region Constructors
 
@@ -36,22 +29,21 @@ namespace NSGASolution_WORKS1
         /// <param name="numberOfVariables">Number of variables</param>
         public NSGAIIProblem(string solutionType, NSGASolutionComponent comp, int solutionsCounter)
         {
-            this.solutionsCounter = solutionsCounter;
             this.component = comp;
             NumberOfVariables = comp.readSlidersList().Count;
             NumberOfObjectives = comp.objectives.Count;
             NumberOfConstraints = 0;
             ProblemName = "Multiobjective";
-           
+
             UpperLimit = new double[NumberOfVariables];
             LowerLimit = new double[NumberOfVariables];
 
             for (int i = 0; i < NumberOfVariables; i++)
             {
                 GH_NumberSlider curSlider = comp.readSlidersList()[i];
-
+                
                 LowerLimit[i] = (double)curSlider.Slider.Minimum;
-                UpperLimit[i] = (double)curSlider.Slider.Maximum;
+                UpperLimit[i] = (double)curSlider.Slider.Maximum; 
             }
 
             if (solutionType == "BinaryReal")
@@ -79,16 +71,9 @@ namespace NSGASolution_WORKS1
 
         public override void Evaluate(Solution solution)
         {
+            double[] storeVar = new double[NumberOfVariables];
+            double[] storeObj = new double[NumberOfObjectives];
             XReal x = new XReal(solution);
-            storeDesign = new double[NumberOfVariables + NumberOfObjectives];
-
-            // Reading x values
-            double[] xValues = new double[NumberOfVariables];
-            for (int i = 0; i < NumberOfVariables; i++)
-            {
-                xValues[i] = x.GetValue(i);
-                storeDesign[i] = x.GetValue(i);
-            }
 
             GH_NumberSlider currentSlider = null;
             for (int i = 0; i < component.readSlidersList().Count; i++)
@@ -102,30 +87,9 @@ namespace NSGASolution_WORKS1
             for (int i = 0; i < component.objectives.Count; i++)
             {
                 solution.Objective[i] = component.objectives[i];
-                storeDesign[NumberOfVariables + i] = component.objectives[i];
             }
-            design.Add(storeDesign);
 
         }
-
-        //public void PrintDesign()
-        //{
-        //    //file = new StreamWriter(@"" + component.outputPath + "allSolutions" + component.fileName);
-
-        //    for (int j = 0; j < design.Count; j++)
-        //    {
-        //        double[] data = design[j];
-        //        string line = "";
-        //        for (int i = 0; i < (NumberOfVariables + NumberOfObjectives); i++)
-        //        {
-        //            line = line + data[i] + ", ";
-        //        }
-        //        file.WriteLine(line);
-        //    }
-        //    file.Close();
-        //}
-
-
 
         #region Private Region
 
@@ -155,7 +119,6 @@ namespace NSGASolution_WORKS1
         }
 
         #endregion
-
 
     }
 }
