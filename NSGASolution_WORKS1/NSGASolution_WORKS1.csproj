@@ -72,12 +72,27 @@
     <Compile Include="NSGASolutionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NSGAIIProblem.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="\\vmware-host\Shared Folders\Desktop\MIT\MIT _ Research\C# libraries\jMetal\Documents\JMetalCSharp.V05\JMetalCSharp\JMetalCSharp.csproj">
       <Project>{88b27c90-4c97-43d5-99d2-e1437da8d154}</Project>
       <Name>JMetalCSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Moo2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

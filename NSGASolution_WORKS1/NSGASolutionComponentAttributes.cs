@@ -24,6 +24,8 @@ namespace NSGASolution_WORKS1
             : base(component)
         {
             MyComponent = (NSGASolutionComponent)component;
+           
+            
         }
 
 
@@ -49,15 +51,17 @@ namespace NSGASolution_WORKS1
         //        // Cache the current styles.
         //        styleStandard = GH_Skin.palette_normal_standard;
         //        styleSelected = GH_Skin.palette_normal_selected;
-        //        GH_Skin.palette_normal_standard = new GH_PaletteStyle(Color.HotPink, Color.Maroon, Color.DarkRed);
+        //        GH_Skin.palette_normal_standard = new GH_PaletteStyle(Color.Maroon, Color.Black, Color.DarkRed);
         //        GH_Skin.palette_normal_selected = new GH_PaletteStyle(Color.SkyBlue, Color.DarkBlue, Color.Black);
         //    }
 
         //    // Allow the base class to render itself.
-        //    base.Render(canvas, graphics, channel);
+        //    //base.Render(canvas, graphics, channel);
+        //    base.RenderComponentCapsule(canvas, graphics);
 
         //    if (channel == GH_CanvasChannel.Objects)
         //    {
+                
         //        // Restore the cached styles.
         //        GH_Skin.palette_normal_standard = styleStandard;
         //        GH_Skin.palette_normal_selected = styleSelected;
