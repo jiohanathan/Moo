@@ -4,7 +4,7 @@ using JMetalCSharp.Utils;
 using JMetalCSharp.Utils.Comparators;
 using System;
 
-namespace NSGASolution_WORKS1
+namespace Moo
 {
     /// <summary>
     /// Implementation of NSGA-II. This implementation of NSGA-II makes use of a
@@ -88,6 +88,7 @@ namespace NSGASolution_WORKS1
             //J* !!! Creating first population !!!
             Random random = new Random(2);
             JMetalRandom.SetRandom(random);
+            comp.LogAddMessage("Random seed = " + 2);
 
             // Create the initial solutionSet
             Solution newSolution;
@@ -189,9 +190,12 @@ namespace NSGASolution_WORKS1
                 }
             }
 
+           
+
             // Return as output parameter the required evaluations
             SetOutputParameter("evaluations", requiredEvaluations);
 
+            comp.LogAddMessage("Evaluations = " + evaluations);
             // Return the first non-dominated front
             Ranking rank = new Ranking(population);
 

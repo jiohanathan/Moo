@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace NSGASolution_WORKS1
+namespace Moo
 {
     class NSGASolutionComponentAttributes : Grasshopper.Kernel.Attributes.GH_ComponentAttributes
     {
@@ -33,9 +33,15 @@ namespace NSGASolution_WORKS1
             variablesSliders = MyComponent.readSlidersList();
             NSGAIIProblem problem = new NSGAIIProblem("ArrayReal", MyComponent, solutionsCounter);
             NSGAIIRunner runner = new NSGAIIRunner(null, problem, null, MyComponent);
+            problem.PrintAllSolutions();
+            problem.PrintLogFile();
+            MessageBox.Show("Finished");    
+
+            //System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\New folder\123d.txt");
+            //file.WriteLine("" + problem.allSolutions.Count);
+            //file.Close();
 
             return base.RespondToMouseDoubleClick(sender, e);
         }
-
     }
 }

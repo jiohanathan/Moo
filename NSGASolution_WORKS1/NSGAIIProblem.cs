@@ -9,7 +9,7 @@ using Grasshopper.Kernel.Special;
 using System.Windows.Forms;
 
 
-namespace NSGASolution_WORKS1
+namespace Moo
 {
     /// <summary>
     /// 
@@ -17,8 +17,15 @@ namespace NSGASolution_WORKS1
     public class NSGAIIProblem : Problem
     {
         NSGASolutionComponent component = null;
+        List<double> var1Value = new List<double>();
+        List<double> var2Value = new List<double>();
+        List<double> objectiveValue = new List<double>();
         List<GH_NumberSlider> variablesSliders = new List<GH_NumberSlider>();
-        
+        List<double> objectives = new List<double>();
+
+        // All Solutions
+        public List<List<double>> allSolutions = new List<List<double>>();
+
         #region Constructors
 
         /// <summary>
@@ -35,15 +42,21 @@ namespace NSGASolution_WORKS1
             NumberOfConstraints = 0;
             ProblemName = "Multiobjective";
 
+            // Log
+            comp.LogAddMessage("Number of Variables = " + NumberOfVariables);
+            comp.LogAddMessage("Number of Objectives = " + NumberOfObjectives);
+            comp.LogAddMessage("Number of Constraints = " + NumberOfConstraints);
+
+
             UpperLimit = new double[NumberOfVariables];
             LowerLimit = new double[NumberOfVariables];
 
             for (int i = 0; i < NumberOfVariables; i++)
             {
                 GH_NumberSlider curSlider = comp.readSlidersList()[i];
-                
+
                 LowerLimit[i] = (double)curSlider.Slider.Minimum;
-                UpperLimit[i] = (double)curSlider.Slider.Maximum; 
+                UpperLimit[i] = (double)curSlider.Slider.Maximum;
             }
 
             if (solutionType == "BinaryReal")
@@ -65,16 +78,32 @@ namespace NSGASolution_WORKS1
                 return;
             }
 
+            // Log
+            comp.LogAddMessage("Solution Type = " + solutionType);
         }
 
         #endregion
 
         public override void Evaluate(Solution solution)
         {
+            // Current Solution
+            List<double> currentSolution = new List<double>();
+
             double[] storeVar = new double[NumberOfVariables];
             double[] storeObj = new double[NumberOfObjectives];
             XReal x = new XReal(solution);
 
+            // Reading x values
+            double[] xValues = new double[NumberOfVariables];
+            for (int i = 0; i < NumberOfVariables; i++)
+            {
+                xValues[i] = x.GetValue(i);
+                var1Value.Add(x.GetValue(0));
+                var2Value.Add(x.GetValue(1));
+
+                currentSolution.Add(x.GetValue(i)); // add current variable value to current solution
+
+            }
             GH_NumberSlider currentSlider = null;
             for (int i = 0; i < component.readSlidersList().Count; i++)
             {
@@ -87,38 +116,37 @@ namespace NSGASolution_WORKS1
             for (int i = 0; i < component.objectives.Count; i++)
             {
                 solution.Objective[i] = component.objectives[i];
+
+                currentSolution.Add(component.objectives[i]); //adding current i-objective to current solution 
             }
+            //component.allSolutions = component.allSolutions +"" + component.objectives[i] + " ";
+
+            allSolutions.Add(currentSolution);
 
         }
 
-        #region Private Region
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public double EvalG(XReal x)
+        public void PrintAllSolutions()
         {
-            double g = 0.0;
-            for (int i = 1; i < x.GetNumberOfDecisionVariables(); i++)
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + component.outputPath + "allSolutions-" + component.fileName);
+            for (int i = 0; i < allSolutions.Count; i++)
             {
-                g += x.GetValue(i);
+                string design = "";
+                List<double> currentDesign = allSolutions[i];
+                for (int j = 0; j < currentDesign.Count; j++)
+                {
+                    design = design + currentDesign[j] + " ";
+                }
+                file.WriteLine(design);
             }
-            double constant = (9.0 / (NumberOfVariables - 1));
-            g = constant * g;
-            g = g + 1.0;
-            return g;
+            file.Close();
         }
 
-        public double EvalH(double f, double g)
+        public void PrintLogFile()
         {
-            double h = 0.0;
-            h = 1.0 - Math.Sqrt(f / g) - (f / g) * Math.Sin(10.0 * Math.PI * f);
-            return h;
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + component.outputPath + "LogFile-" + component.fileName);
+            string design = component.log;
+            file.WriteLine(design);
+            file.Close();
         }
-
-        #endregion
-
     }
 }

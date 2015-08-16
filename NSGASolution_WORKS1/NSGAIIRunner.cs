@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using JMetalCSharp.Problems.Kursawe;
 using System.Windows.Forms;
 
-namespace NSGASolution_WORKS1
+namespace Moo
 {
     /// <summary>
     /// Class to configure and execute the NSGA-II algorithm.
@@ -78,21 +78,30 @@ namespace NSGASolution_WORKS1
             // Algorithm parameters
             algorithm.SetInputParameter("populationSize", comp.popSize);
             algorithm.SetInputParameter("maxEvaluations", comp.maxIterations);
+            comp.LogAddMessage("Population Size = " + comp.popSize);
+            comp.LogAddMessage("Max Iterations = " + comp.maxIterations);
 
             // Mutation and Crossover for Real codification 
             parameters = new Dictionary<string, object>();
             parameters.Add("probability", 0.9);
             parameters.Add("distributionIndex", 20.0);
             crossover = CrossoverFactory.GetCrossoverOperator("SBXCrossover", parameters);
+            comp.LogAddMessage("Crossover Type = " + "SBXCrossover");
+            comp.LogAddMessage("Crossover Probability = " + 0.9);
+            comp.LogAddMessage("Crossover Distribution Index = " + 20);
 
             parameters = new Dictionary<string, object>();
             parameters.Add("probability", 1.0 / problem.NumberOfVariables);
             parameters.Add("distributionIndex", 20.0);
             mutation = MutationFactory.GetMutationOperator("PolynomialMutation", parameters);
+            comp.LogAddMessage("Mutation Type = " + "Polynomial Mutation");
+            comp.LogAddMessage("Mutation Probability = " + (1/problem.NumberOfVariables));
+            comp.LogAddMessage("Mutation Distribution Index = " + 20);
 
             // Selection Operator 
             parameters = null;
             selection = SelectionFactory.GetSelectionOperator("BinaryTournament2", parameters);
+            comp.LogAddMessage("Selection Type = " + "Binary Tournament 2");
 
             // Add the operators to the algorithm
             algorithm.AddOperator("crossover", crossover);
@@ -106,16 +115,16 @@ namespace NSGASolution_WORKS1
             long initTime = Environment.TickCount;
             SolutionSet population = algorithm.Execute();
             long estimatedTime = Environment.TickCount - initTime;
-
+            comp.LogAddMessage("Total Execution Time = " + estimatedTime + "ms");
 
             // Result messages 
             //logger.Info("Total execution time: " + estimatedTime + "ms");
             //logger.Info("Variables values have been writen to file VAR");
             
-            population.PrintVariablesToFile(@"C:\Users\Jonathas\Desktop");
-            MessageBox.Show(comp.fileName);
+            //population.PrintVariablesToFile(@"C:\Users\Jonathas\Desktop\text.txt");
+            population.PrintVariablesToFile(@"" + comp.outputPath + "VAR-" + comp.fileName);
             //logger.Info("Objectives values have been writen to file FUN");
-            //population.PrintObjectivesToFile(@"" + comp.outputPath + "OBJECTIVES_" + comp.fileName);
+            population.PrintObjectivesToFile(@"" + comp.outputPath + "OBJ-" + comp.fileName);
             // Saving all solutions to file
             
 

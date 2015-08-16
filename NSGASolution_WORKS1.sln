@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSGASolution_WORKS1", "NSGASolution_WORKS1\NSGASolution_WORKS1.csproj", "{528F3E23-C601-49B2-8F22-B585807374ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MooSolution", "NSGASolution_WORKS1\MooSolution.csproj", "{528F3E23-C601-49B2-8F22-B585807374ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMetalCSharp", "\\vmware-host\Shared Folders\Desktop\MIT\MIT _ Research\C# libraries\jMetal\Documents\JMetalCSharp.V05\JMetalCSharp\JMetalCSharp.csproj", "{88B27C90-4C97-43D5-99D2-E1437DA8D154}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMetalCSharp", "\\vmware-host\Shared Folders\Desktop\Desktop\MIT\MIT _ Research\C# libraries\jMetal\Documents\JMetalCSharp.V05\JMetalCSharp\JMetalCSharp.csproj", "{88B27C90-4C97-43D5-99D2-E1437DA8D154}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

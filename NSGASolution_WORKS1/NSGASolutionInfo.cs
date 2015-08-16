@@ -2,7 +2,7 @@
 using System.Drawing;
 using Grasshopper.Kernel;
 
-namespace NSGASolution_WORKS1
+namespace Moo
 {
     public class NSGASolutionInfo : GH_AssemblyInfo
     {

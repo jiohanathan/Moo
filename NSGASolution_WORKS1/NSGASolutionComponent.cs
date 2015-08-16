@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Special;
 using Rhino.Geometry;
-using NSGASolution_WORKS1;
+using Moo;
+using Grasshopper;
+using System.Windows.Forms;
 
-namespace NSGASolution_WORKS1
+namespace Moo
 {
     public class NSGASolutionComponent : GH_Component
     {
         public List<double> objectives;
         public List<GH_NumberSlider> slidersList = new List<GH_NumberSlider>();
-        public int popSize = 0, maxIterations = 0; 
+        public int popSize = 0, maxIterations = 0;
         public string outputPath = null, fileName = null;
-        public string allSolutions = null;
+        public string log = null;
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -23,8 +26,8 @@ namespace NSGASolution_WORKS1
         /// new tabs/panels will automatically be created.
         /// </summary>
         public NSGASolutionComponent()
-            : base("NSGAII", "NSGAII",
-                "Construct an Archimedean, or arithmetic, spiral given its radii and number of turns.",
+            : base("Moo", "MOO",
+                "Multi objective optimization using NSGAII algorithm",
                 "MIT", "Optimization")
         {
         }
@@ -71,6 +74,7 @@ namespace NSGASolution_WORKS1
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
+            //pManager.AddNumberParameter("Output", "out", "out", GH_ParamAccess.tree);
             //pManager.HideParameter(0);
         }
 
@@ -99,14 +103,29 @@ namespace NSGASolution_WORKS1
             if (!DA.GetData(3, ref maxIterations)) return;
             if (!DA.GetData(4, ref outputPath)) return;
             if (!DA.GetData(5, ref fileName)) return;
+            //DA.SetDataTree(0, ListOfListsToTree<double>(c));
 
-         }
+        }
+
+        //static DataTree<T> ListOfListsToTree<T>(List<List<T>> listofLists)
+        //{
+        //    DataTree<T> tree = new DataTree<T>();
+        //    for (int i = 0; i < listofLists.Count; i++)
+        //    {
+        //        tree.AddRange(listofLists[i], new GH_Path(i));
+        //    }
+        //    return tree;
+        //}
 
         public List<double> getObjectives()
         {
             return objectives;
         }
 
+        public void LogAddMessage(string message)
+        {
+            log = log + message + "\r\n";
+        }
 
         /// <summary>
         /// The Exposure property controls where in the panel a component icon 
@@ -128,7 +147,7 @@ namespace NSGASolution_WORKS1
             get
             {
                 // You can add image files to your project resources and access them like this:
-                return Properties.Resources.Moo2;
+                return Properties.Resources.logo;
                 //return null;
             }
         }
